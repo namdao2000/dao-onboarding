@@ -15,7 +15,6 @@ export const UserDataLayer = {
   },
   getUsers: async (offset: number): Promise<UserSchema[] | undefined> => {
     const result = await (await DB).all(SQL_STATEMENTS.getUsers, [offset]);
-    console.log('no way', result);
     return result;
   },
 };

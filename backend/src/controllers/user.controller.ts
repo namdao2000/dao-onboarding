@@ -31,7 +31,6 @@ export const UserController = {
   ): Promise<void> => {
     try {
       const users = await UserService.getUsers(parseInt(req.query.offset) || 0);
-      console.log('what tf', users);
       res.status(200).json({
         users,
       });

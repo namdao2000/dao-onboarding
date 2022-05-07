@@ -14,7 +14,6 @@ export const useUser = (): IUseUserReturn => {
         'get',
         `${APP_URL}/users?offset=${offset}`,
       );
-      console.log('what is this', result?.data);
       return result?.data.users;
     },
     [axiosWrapper],
