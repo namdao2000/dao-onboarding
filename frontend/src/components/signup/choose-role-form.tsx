@@ -1,66 +1,100 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
-import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import { ReactElement } from 'react';
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { SignupArgs, useSignup } from '../../services/user/use-signup';
+import { toast } from 'react-hot-toast';
+import Box from '@mui/material/Box';
 
-export default function ChooseRoleForm(): ReactElement {
+export default function ChooseRoleForm({
+  handleNext,
+  handleBack,
+}: {
+  handleNext: () => void;
+  handleBack: () => void;
+}): ReactElement {
+  const { handleSubmit, control } = useForm<{
+    discordUsername: string;
+    userRole: string;
+  }>();
+
+  const { signup } = useSignup();
+
+  const onSubmit = async (data: SignupArgs): Promise<void> => {
+    await signup({
+      signupArgs: data,
+      onSuccess: async () => {
+        toast.success('Singup Successful');
+        handleNext();
+      },
+    });
+  };
+
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
-        Payment method
-      </Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardName"
-            label="Name on card"
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="flex justify-center">
+          <Typography variant="h6" gutterBottom>
+            Choose your role
+          </Typography>
+        </div>
+        <Controller
+          render={({ field }): ReactElement => (
+            <TextField
+              {...field}
+              required
+              id="discordUsername"
+              label="Discord or Name"
+              fullWidth
+            />
+          )}
+          name="discordUsername"
+          control={control}
+        />
+        <div className="pt-4">
+          <Controller
+            render={({ field }): ReactElement => (
+              <FormControl fullWidth>
+                <InputLabel id="select-label-1">I am a...</InputLabel>
+                <Select labelId="select-label-1" label="I am a..." {...field}>
+                  <MenuItem value="Developer">Developer</MenuItem>
+                  <MenuItem value="Marketer">Marketer</MenuItem>
+                  <MenuItem value="Biz Dev">Biz Dev</MenuItem>
+                  <MenuItem value="Lurker">Lurker</MenuItem>
+                  <MenuItem value="Designer">Designer</MenuItem>
+                </Select>
+              </FormControl>
+            )}
+            name="userRole"
+            control={control}
+          />
+        </div>
+        <Box>
+          <Button
+            variant="contained"
+            sx={{ display: 'block', mt: 3 }}
             fullWidth
-            autoComplete="cc-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cardNumber"
-            label="Card number"
+            type="submit"
+          >
+            Next
+          </Button>
+          <Button
+            onClick={handleBack}
+            sx={{ display: 'block', mt: 2 }}
             fullWidth
-            autoComplete="cc-number"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="expDate"
-            label="Expiry date"
-            fullWidth
-            autoComplete="cc-exp"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TextField
-            required
-            id="cvv"
-            label="CVV"
-            helperText="Last three digits on signature strip"
-            fullWidth
-            autoComplete="cc-csc"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveCard" value="yes" />}
-            label="Remember credit card details for next time"
-          />
-        </Grid>
-      </Grid>
+          >
+            Back
+          </Button>
+        </Box>
+      </form>
     </React.Fragment>
   );
 }

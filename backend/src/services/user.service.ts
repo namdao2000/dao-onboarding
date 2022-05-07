@@ -7,14 +7,11 @@ import {
 import { SignupReqArgs } from '../controllers/types';
 
 export const UserService = {
-  createNewUser: async ({
-    discord_username,
-    user_role,
-  }: SignupReqArgs): Promise<void> => {
+  createNewUser: async ({ discordUsername, userRole }: SignupReqArgs): Promise<void> => {
     try {
       await UserDataLayer.createNewUser({
-        discord_username,
-        user_role,
+        discordUsername,
+        userRole,
       });
     } catch (e) {
       throw new HttpError(getHttpErrorResponse(ErrorCode.USERNAME_TAKEN));

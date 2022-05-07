@@ -4,8 +4,8 @@ import { APP_URL } from '../../utils/constants';
 import { useAuthState } from '../auth/auth-state-provider';
 
 export interface SignupArgs {
-  discord_username: string;
-  user_role: string;
+  discordUsername: string;
+  userRole: string;
 }
 
 export const useSignup = (): {

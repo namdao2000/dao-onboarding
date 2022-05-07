@@ -1,4 +1,4 @@
 export interface SignupReqArgs {
-  discord_username: string;
-  user_role: string;
+  discordUsername: string;
+  userRole: string;
 }

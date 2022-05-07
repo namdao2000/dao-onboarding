@@ -2,16 +2,16 @@ export const SQL_STATEMENTS = {
   initialiseDatabase: `
       CREATE TABLE IF NOT EXISTS user
       (
-          discord_username VARCHAR
+          discordUsername VARCHAR
       (
           255
       ) PRIMARY KEY,
-          user_role VARCHAR
+          userRole VARCHAR
       (
           255
       ) NOT NULL,
-          created_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-          updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
+          createdAt DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+          updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL
           );
 
       CREATE TRIGGER IF NOT EXISTS user_auto_updated_at

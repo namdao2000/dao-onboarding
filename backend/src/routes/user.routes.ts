@@ -6,12 +6,12 @@ import { validateResult } from '../middleware/validate-result.middleware';
 export const UserRouter = Router();
 UserRouter.post(
   '/signup',
-  body('discord_username')
+  body('discordUsername')
     .exists()
     .withMessage('required')
     .isLength({ min: 3, max: 14 })
     .withMessage('Must be between 3 to 14 characters long.'),
-  body('user_role')
+  body('userRole')
     .exists()
     .withMessage('required')
     .isLength({ max: 255 })

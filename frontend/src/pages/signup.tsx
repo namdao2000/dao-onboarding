@@ -16,53 +16,9 @@ import OnboardingCall from '../components/signup/onboarding-call';
 
 const steps = ['About', 'Choose your role', 'Onboarding call'];
 
-function getStepContent(step: number): ReactElement {
-  switch (step) {
-    case 0:
-      return <About />;
-    case 1:
-      return <ChooseRoleForm />;
-    case 2:
-      return <OnboardingCall />;
-    case 3:
-      return <>Hello Discord Community</>;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
 const theme = createTheme();
 
 const Signup = (): ReactElement => {
-  // const { signup, loading } = useSignup();
-  // const navigate = useNavigate();
-  //
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors },
-  //   control,
-  // } = useForm<{
-  //   first_name: string;
-  //   last_name: string;
-  //   username: string;
-  //   password: string;
-  // }>();
-  //
-  // const onSubmit = useMemo(
-  //   () =>
-  //     handleSubmit(async (signupArgs: SignupArgs) => {
-  //       await signup({
-  //         signupArgs: signupArgs,
-  //         onSuccess: async () => {
-  //           toast.success('Singup Successful');
-  //           navigate(`${ROUTES.dashboard}`, { replace: true });
-  //         },
-  //       });
-  //     }),
-  //   [handleSubmit, signup],
-  // );
-
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = (): void => {
@@ -72,6 +28,23 @@ const Signup = (): ReactElement => {
   const handleBack = (): void => {
     setActiveStep(activeStep - 1);
   };
+
+  function getStepContent(step: number): ReactElement {
+    switch (step) {
+      case 0:
+        return <About />;
+      case 1:
+        return (
+          <ChooseRoleForm handleNext={handleNext} handleBack={handleBack} />
+        );
+      case 2:
+        return <OnboardingCall />;
+      case 3:
+        return <>Hello Discord Community</>;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -101,25 +74,27 @@ const Signup = (): ReactElement => {
             ) : (
               <React.Fragment>
                 {getStepContent(activeStep)}
-                <Box>
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ display: 'block', mt: 3 }}
-                    fullWidth
-                  >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                  </Button>
-                  {activeStep !== 0 && (
+                {activeStep !== 1 && (
+                  <Box>
                     <Button
-                      onClick={handleBack}
-                      sx={{ display: 'block', mt: 2 }}
+                      variant="contained"
+                      onClick={handleNext}
+                      sx={{ display: 'block', mt: 3 }}
                       fullWidth
                     >
-                      Back
+                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
                     </Button>
-                  )}
-                </Box>
+                    {activeStep !== 0 && (
+                      <Button
+                        onClick={handleBack}
+                        sx={{ display: 'block', mt: 2 }}
+                        fullWidth
+                      >
+                        Back
+                      </Button>
+                    )}
+                  </Box>
+                )}
               </React.Fragment>
             )}
           </React.Fragment>

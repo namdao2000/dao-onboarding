@@ -13,10 +13,10 @@ export const UserController = {
         ...req.body,
       });
       res.status(201).json({
-        message: `Successfully registered a new user ${req.body.discord_username}.`,
+        message: `Successfully registered a new user ${req.body.discordUsername}.`,
         user: {
-          username: req.body.discord_username,
-          user_role: req.body.user_role,
+          username: req.body.discordUsername,
+          user_role: req.body.userRole,
         },
       });
       next();
