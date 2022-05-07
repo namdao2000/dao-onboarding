@@ -13,6 +13,8 @@ import { ReactElement } from 'react';
 import ChooseRoleForm from '../components/signup/choose-role-form';
 import About from '../components/signup/about';
 import OnboardingCall from '../components/signup/onboarding-call';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '../utils/routes';
 
 const steps = ['About', 'Choose your role', 'Onboarding call'];
 
@@ -20,6 +22,7 @@ const theme = createTheme();
 
 const Signup = (): ReactElement => {
   const [activeStep, setActiveStep] = React.useState(0);
+  const navigate = useNavigate();
 
   const handleNext = (): void => {
     setActiveStep(activeStep + 1);
@@ -40,7 +43,13 @@ const Signup = (): ReactElement => {
       case 2:
         return <OnboardingCall />;
       case 3:
-        return <>Hello Discord Community</>;
+        return (
+          <div className="flex justify-center">
+            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
+              Say hi to your community in discord 👋
+            </Typography>
+          </div>
+        );
       default:
         throw new Error('Unknown step');
     }
@@ -65,37 +74,40 @@ const Signup = (): ReactElement => {
             ))}
           </Stepper>
           <React.Fragment>
-            {activeStep === steps.length ? (
-              <div className="flex justify-center">
-                <Typography variant="h5" gutterBottom>
-                  Say hi to your community in discord 👋
-                </Typography>
-              </div>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                {activeStep !== 1 && (
-                  <Box>
-                    <Button
-                      variant="contained"
-                      onClick={handleNext}
-                      sx={{ display: 'block', mt: 3 }}
-                      fullWidth
-                    >
-                      {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
-                    </Button>
-                    {activeStep !== 0 && (
-                      <Button
-                        onClick={handleBack}
-                        sx={{ display: 'block', mt: 2 }}
-                        fullWidth
-                      >
-                        Back
-                      </Button>
-                    )}
-                  </Box>
+            {getStepContent(activeStep)}
+            {activeStep !== 1 && (
+              <Box>
+                {activeStep < 3 ? (
+                  <Button
+                    variant="contained"
+                    onClick={handleNext}
+                    sx={{ display: 'block', mt: 3 }}
+                    fullWidth
+                  >
+                    Next
+                  </Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    onClick={(): void => {
+                      navigate(`${ROUTES.dashboard}`);
+                    }}
+                    sx={{ display: 'block', mt: 3 }}
+                    fullWidth
+                  >
+                    Get in there!
+                  </Button>
                 )}
-              </React.Fragment>
+                {activeStep !== 0 && (
+                  <Button
+                    onClick={handleBack}
+                    sx={{ display: 'block', mt: 2 }}
+                    fullWidth
+                  >
+                    Back
+                  </Button>
+                )}
+              </Box>
             )}
           </React.Fragment>
         </Paper>

@@ -9,7 +9,7 @@ UserRouter.post(
   body('discordUsername')
     .exists()
     .withMessage('required')
-    .isLength({ min: 3, max: 14 })
+    .isLength({ max: 14 })
     .withMessage('Must be between 3 to 14 characters long.'),
   body('userRole')
     .exists()
