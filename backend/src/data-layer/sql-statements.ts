@@ -20,18 +20,18 @@ export const SQL_STATEMENTS = {
           ON user
       BEGIN
       UPDATE user
-      SET updated_at = CURRENT_TIMESTAMP
-      WHERE username = NEW.username;
+      SET updatedAt = CURRENT_TIMESTAMP
+      WHERE discordUsername = NEW.discordUsername;
       END;
   `,
   createUser: `
-      INSERT INTO user (discord_username, user_role)
+      INSERT INTO user (discordUsername, userRole)
       VALUES (?, ?)
   `,
   getUsers: `
       SELECT *
       FROM user
-      ORDER BY updated_at DESC LIMIT 15
+      ORDER BY updatedAt DESC LIMIT 15
       OFFSET ?
   `,
 };

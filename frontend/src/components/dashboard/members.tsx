@@ -6,89 +6,122 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './title';
-import { ReactElement } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-// Generate Order Data
-function createData(
-  id: number,
-  date: string,
-  name: string,
-  shipTo: string,
-  paymentMethod: string,
-  amount: number,
-): any {
-  return { id, date, name, shipTo, paymentMethod, amount };
-}
-
-const rows = [
-  createData(
-    0,
-    '16 Mar, 2019',
-    'Elvis Presley',
-    'Tupelo, MS',
-    'VISA ⠀•••• 3719',
-    312.44,
-  ),
-  createData(
-    1,
-    '16 Mar, 2019',
-    'Paul McCartney',
-    'London, UK',
-    'VISA ⠀•••• 2574',
-    866.99,
-  ),
-  createData(
-    2,
-    '16 Mar, 2019',
-    'Tom Scholz',
-    'Boston, MA',
-    'MC ⠀•••• 1253',
-    100.81,
-  ),
-  createData(
-    3,
-    '16 Mar, 2019',
-    'Michael Jackson',
-    'Gary, IN',
-    'AMEX ⠀•••• 2000',
-    654.39,
-  ),
-  createData(
-    4,
-    '15 Mar, 2019',
-    'Bruce Springsteen',
-    'Long Branch, NJ',
-    'VISA ⠀•••• 5919',
-    212.79,
-  ),
-];
+import { useUser } from '../../services/user/use-user';
+import { User } from '../../types/user';
+import { Avatar } from './avatar';
+import Typography from '@mui/material/Typography';
+import { Chip } from '@mui/material';
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
+import SortIcon from '@mui/icons-material/Sort';
 
 function preventDefault(event: React.MouseEvent): void {
   event.preventDefault();
 }
 
+const getUserRoleText = (role: string): string => {
+  switch (role) {
+    case 'Marketer':
+      return 'Acquiring mad level of customers';
+    case 'Developer':
+      return 'Shipping a bombass feature';
+    case 'Lurker':
+      return 'Just looking around';
+    case 'Biz Dev':
+      return 'Chilling in my office';
+    case 'Designer':
+      return 'Building (insert task) on Figma';
+    default:
+      return 'Growing this DAO organization';
+  }
+};
+
+const getUserRoleChip = (role: string): ReactElement => {
+  switch (role) {
+    case 'Marketer':
+      return <Chip label={role} color="primary" />;
+    case 'Developer':
+      return <Chip label={role} color="error" />;
+    case 'Lurker':
+      return <Chip label={role} color="info" />;
+    case 'Biz Dev':
+      return <Chip label={role} color="success" />;
+    case 'Designer':
+      return <Chip label={role} color="warning" />;
+    default:
+      return <Chip label={role} color="default" />;
+  }
+};
+
 export default function Members(): ReactElement {
+  const { getUsers } = useUser();
+  const [users, setUsers] = useState<User[]>([]);
+
+  useEffect(() => {
+    getUsers(0).then((data) => {
+      setUsers(data);
+    });
+  }, []);
+
   return (
     <React.Fragment>
-      <Title>All Members</Title>
+      <div className="flex justify-between items-center">
+        <Title>All Members</Title>
+        <div className="flex space-x-4 pr-4">
+          <div className="flex items-center space-x-2">
+            <SortIcon />
+            <Typography
+              className="hover:cursor-pointer"
+              variant="body2"
+              sx={{ fontWeight: 'light' }}
+            >
+              Sort
+            </Typography>
+          </div>
+          <div className="flex items-center space-x-2">
+            <FilterAltIcon className="text-xs" />
+            <Typography
+              className="hover:cursor-pointer"
+              variant="body2"
+              sx={{ fontWeight: 'light' }}
+            >
+              Filter
+            </Typography>
+          </div>
+        </div>
+      </div>
       <Table size="small">
         <TableHead>
           <TableRow>
             <TableCell>Member details</TableCell>
             <TableCell>Discord name</TableCell>
             <TableCell>Date joined</TableCell>
-            <TableCell>Role</TableCell>
+            <TableCell align="center">Role</TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+          {users.map((user, key) => (
+            <TableRow key={key}>
+              <TableCell>
+                <div className="flex items-center space-x-4">
+                  <Avatar />
+                  <div>
+                    <Typography variant="body2">
+                      {getUserRoleText(user.userRole)}
+                    </Typography>
+                    <Typography variant="caption" sx={{ fontWeight: 'light' }}>
+                      Updated 1 Day ago
+                    </Typography>
+                  </div>
+                </div>
+              </TableCell>
+              <TableCell>{user.discordUsername}</TableCell>
+              <TableCell>{user.createdAt}</TableCell>
+              <TableCell align="center">
+                {getUserRoleChip(user.userRole)}
+              </TableCell>
               <TableCell align="right">
                 <div className="hover:cursor-pointer">
                   <MoreVertIcon />
@@ -99,7 +132,7 @@ export default function Members(): ReactElement {
         </TableBody>
       </Table>
       <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more orders
+        See more members
       </Link>
     </React.Fragment>
   );

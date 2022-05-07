@@ -30,7 +30,8 @@ export const UserController = {
     next: NextFunction,
   ): Promise<void> => {
     try {
-      const users = await UserService.getUsers(parseInt(req.query.offset) || 1);
+      const users = await UserService.getUsers(parseInt(req.query.offset) || 0);
+      console.log('what tf', users);
       res.status(200).json({
         users,
       });

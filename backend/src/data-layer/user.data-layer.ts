@@ -11,9 +11,11 @@ export interface UserSchema {
 
 export const UserDataLayer = {
   createNewUser: async ({ discordUsername, userRole }: SignupReqArgs): Promise<void> => {
-    await (await DB).all(SQL_STATEMENTS.createUser, [discordUsername, userRole]);
+    await (await DB).run(SQL_STATEMENTS.createUser, [discordUsername, userRole]);
   },
   getUsers: async (offset: number): Promise<UserSchema[] | undefined> => {
-    return await (await DB).get(SQL_STATEMENTS.getUsers, [offset]);
+    const result = await (await DB).all(SQL_STATEMENTS.getUsers, [offset]);
+    console.log('no way', result);
+    return result;
   },
 };
