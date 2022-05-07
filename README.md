@@ -1,7 +1,7 @@
 # Dao Dashboard 
 This website allows you to sign up to a DAO project and view other contributors via a dashboard
 
-[Live Page]()
+[Live Page](https://dao-onboarding.namdao.dev/)
 
 ## Frontend
 The frontend is written in React, Tailwind and Typescript.
