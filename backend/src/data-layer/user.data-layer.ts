@@ -15,6 +15,12 @@ export const UserDataLayer = {
   },
   getUsers: async (offset: number): Promise<UserSchema[] | undefined> => {
     const result = await (await DB).all(SQL_STATEMENTS.getUsers, [offset]);
-    return result;
+    return result.map((user) => {
+      return {
+        ...user,
+        createdAt: user.createdAt + ' UTC',
+        updatedAt: user.updatedAt + ' UTC',
+      };
+    });
   },
 };
