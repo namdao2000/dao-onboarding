@@ -31,14 +31,14 @@ export default function About(): ReactElement {
       </div>
       <div className="px-2 py-2">
         <Typography variant="body1" sx={{ fontWeight: 'light' }}>
-          <span className="underline">Click here</span> to learn more about
+          <button className="underline">Click here</button> to learn more about
           Krause House
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: 'light' }}>
-          <span className="underline">Click here</span> for other resources
+          <button className="underline">Click here</button> for other resources
         </Typography>
         <Typography variant="body1" sx={{ fontWeight: 'light' }}>
-          <span className="underline">Click here</span> to see how you can
+          <button className="underline">Click here</button> to see how you can
           contribute
         </Typography>
       </div>
