@@ -16,10 +16,8 @@ import Box from '@mui/material/Box';
 
 export default function ChooseRoleForm({
   handleNext,
-  handleBack,
 }: {
   handleNext: () => void;
-  handleBack: () => void;
 }): ReactElement {
   const { handleSubmit, control } = useForm<{
     discordUsername: string;
@@ -85,13 +83,6 @@ export default function ChooseRoleForm({
             type="submit"
           >
             Next
-          </Button>
-          <Button
-            onClick={handleBack}
-            sx={{ display: 'block', mt: 2 }}
-            fullWidth
-          >
-            Back
           </Button>
         </Box>
       </form>

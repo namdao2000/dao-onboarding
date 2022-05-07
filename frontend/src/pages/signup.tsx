@@ -28,18 +28,12 @@ const Signup = (): ReactElement => {
     setActiveStep(activeStep + 1);
   };
 
-  const handleBack = (): void => {
-    setActiveStep(activeStep - 1);
-  };
-
   function getStepContent(step: number): ReactElement {
     switch (step) {
       case 0:
         return <About />;
       case 1:
-        return (
-          <ChooseRoleForm handleNext={handleNext} handleBack={handleBack} />
-        );
+        return <ChooseRoleForm handleNext={handleNext} />;
       case 2:
         return <OnboardingCall />;
       case 3:
@@ -96,15 +90,6 @@ const Signup = (): ReactElement => {
                     fullWidth
                   >
                     Get in there!
-                  </Button>
-                )}
-                {activeStep !== 0 && (
-                  <Button
-                    onClick={handleBack}
-                    sx={{ display: 'block', mt: 2 }}
-                    fullWidth
-                  >
-                    Back
                   </Button>
                 )}
               </Box>
