@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Typography from '@mui/material/Typography';
 import { ReactElement } from 'react';
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { FormControl, InputLabel, Link, MenuItem, Select } from '@mui/material';
+import { ROUTES } from '../../utils/routes';
+import { toast } from 'react-hot-toast';
 
 export default function OnboardingCall(): ReactElement {
   return (
@@ -25,6 +27,22 @@ export default function OnboardingCall(): ReactElement {
           <MenuItem value="Lurker">Thursday, November 25 2021</MenuItem>
         </Select>
       </FormControl>
+      <div className="flex justify-end py-4">
+        <button
+          className="flex space-x-1 items-center"
+          onClick={(): void => {
+            toast.error('WIP 😛');
+          }}
+        >
+          <Typography variant="body2" sx={{ fontWeight: 'light' }}>
+            Add to calendar
+          </Typography>
+          <img
+            className="h-[1.5em]"
+            src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
+          />
+        </button>
+      </div>
     </React.Fragment>
   );
 }

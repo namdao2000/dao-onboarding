@@ -62,7 +62,12 @@ export default function ChooseRoleForm({
             render={({ field }): ReactElement => (
               <FormControl fullWidth>
                 <InputLabel id="select-label-1">I am a...</InputLabel>
-                <Select labelId="select-label-1" label="I am a..." {...field}>
+                <Select
+                  labelId="select-label-1"
+                  required
+                  label="I am a..."
+                  {...field}
+                >
                   <MenuItem value="Developer">Developer</MenuItem>
                   <MenuItem value="Marketer">Marketer</MenuItem>
                   <MenuItem value="Biz Dev">Biz Dev</MenuItem>

@@ -15,6 +15,7 @@ import About from '../components/signup/about';
 import OnboardingCall from '../components/signup/onboarding-call';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '../utils/routes';
+import { Link } from '@mui/material';
 
 const steps = ['About', 'Choose your role', 'Onboarding call'];
 
@@ -57,6 +58,30 @@ const Signup = (): ReactElement => {
           variant="outlined"
           sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}
         >
+          {activeStep >= 1 && (
+            <div className="flex justify-end">
+              <Link
+                href="https://discord.gg/RXcGyWd"
+                target="_blank"
+                rel="noopener noreferrer"
+                underline="none"
+                color="inherit"
+                className="flex space-x-1 items-center"
+                onClick={(): void => {
+                  navigate(`${ROUTES.dashboard}`);
+                }}
+              >
+                <Typography variant="body2" sx={{ fontWeight: 'light' }}>
+                  Skip and join discord
+                </Typography>
+                <img
+                  className="h-[1.5em]"
+                  src="https://www.freepnglogos.com/uploads/discord-logo-png/concours-discord-cartes-voeux-fortnite-france-6.png"
+                />
+              </Link>
+            </div>
+          )}
+
           <Typography component="h1" variant="h4" align="center">
             Welcome!
           </Typography>
