@@ -15,6 +15,8 @@ import Typography from '@mui/material/Typography';
 import { Chip } from '@mui/material';
 import FilterAltIcon from '@mui/icons-material/FilterAlt';
 import SortIcon from '@mui/icons-material/Sort';
+import TimeAgo from 'react-timeago';
+import { format } from 'date-fns';
 
 function preventDefault(event: React.MouseEvent): void {
   event.preventDefault();
@@ -40,17 +42,17 @@ const getUserRoleText = (role: string): string => {
 const getUserRoleChip = (role: string): ReactElement => {
   switch (role) {
     case 'Marketer':
-      return <Chip label={role} color="primary" />;
+      return <Chip label={role} size="small" color="primary" />;
     case 'Developer':
-      return <Chip label={role} color="error" />;
+      return <Chip label={role} size="small" color="error" />;
     case 'Lurker':
-      return <Chip label={role} color="info" />;
+      return <Chip label={role} size="small" color="info" />;
     case 'Biz Dev':
-      return <Chip label={role} color="success" />;
+      return <Chip label={role} size="small" color="success" />;
     case 'Designer':
-      return <Chip label={role} color="warning" />;
+      return <Chip label={role} size="small" color="warning" />;
     default:
-      return <Chip label={role} color="default" />;
+      return <Chip label={role} size="small" color="default" />;
   }
 };
 
@@ -112,13 +114,15 @@ export default function Members(): ReactElement {
                       {getUserRoleText(user.userRole)}
                     </Typography>
                     <Typography variant="caption" sx={{ fontWeight: 'light' }}>
-                      Updated 1 Day ago
+                      Updated <TimeAgo date={new Date(user.updatedAt)} />
                     </Typography>
                   </div>
                 </div>
               </TableCell>
               <TableCell>{user.discordUsername}</TableCell>
-              <TableCell>{user.createdAt}</TableCell>
+              <TableCell>
+                {format(new Date(user.createdAt), 'MMM dd, yyyy')}
+              </TableCell>
               <TableCell align="center">
                 {getUserRoleChip(user.userRole)}
               </TableCell>
