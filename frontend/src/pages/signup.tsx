@@ -84,7 +84,7 @@ const Signup = (): ReactElement => {
           <Typography component="h1" variant="h4" align="center">
             Welcome!
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 3 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
@@ -113,7 +113,7 @@ const Signup = (): ReactElement => {
                   {activeStep !== 0 && (
                     <Button
                       onClick={handleBack}
-                      sx={{ display: 'block', mt: 1 }}
+                      sx={{ display: 'block', mt: 2 }}
                       fullWidth
                     >
                       Back
